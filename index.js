@@ -10,6 +10,9 @@ const morgan = require('morgan');
 const helmet = require('helmet');
 //Handle logs
 const accessLogStream = require('./utils/accessLogStream');
+//Docs
+const swaggerUi = require('swagger-ui-express');
+const swaggerDocument = require('./swagger.json');
 
 //Configs
 const PORT = process.env.PORT;
@@ -39,6 +42,7 @@ function initMiddleware(app) {
 
 function declareRoutes(app) {
 	app.use('/api/auth', authRouter);
+	app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 }
 
 async function connectToDb() {
