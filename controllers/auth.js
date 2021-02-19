@@ -40,7 +40,7 @@ async function signUpUser(req, res) {
 
 	const { _id, username, email, balance, currentWeek } = currentUser;
 
-	return res.status(201).send({
+	return res.status(201).json({
 		token,
 		user: { id: _id, username, email, balance },
 		week: currentWeek,
