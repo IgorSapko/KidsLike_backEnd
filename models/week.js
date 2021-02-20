@@ -1,3 +1,4 @@
+// Core Mongoose
 const {
 	model,
 	Schema,
@@ -5,10 +6,10 @@ const {
 } = require('mongoose');
 
 const weekSchema = new Schema({
-	startWeekDate: String,
-	endWeekDate: String,
-	rewardsGained: Number,
-	rewardsPlanned: Number,
+	startWeekDate: { type: String },
+	endWeekDate: { type: String },
+	rewardsGained: { type: Number },
+	rewardsPlanned: { type: Number },
 	tasks: [{ type: ObjectId, ref: 'Task' }],
 });
 

@@ -1,3 +1,4 @@
+// Core Mongoose
 const {
 	model,
 	Schema,
@@ -5,7 +6,7 @@ const {
 } = require('mongoose');
 
 const userSchema = new Schema({
-	username: String,
+	username: { type: String, required: true },
 	email: {
 		type: String,
 		required: true,
@@ -15,8 +16,8 @@ const userSchema = new Schema({
 			message: 'Email must contain "@"',
 		},
 	},
-	password: String,
-	balance: Number,
+	password: { type: String, required: true },
+	balance: { type: Number, required: false },
 	token: { type: String, required: false },
 	currentWeek: { type: ObjectId, ref: 'Week' },
 });

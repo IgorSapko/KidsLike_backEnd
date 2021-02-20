@@ -1,9 +1,10 @@
-//Core
+// Core Express & Mongoose
 const express = require('express');
 const mongoose = require('mongoose');
 //Routes
 const authRouter = require('./routes/auth');
 const userRouter = require('./routes/user');
+const taskRouter = require('./routes/task');
 //Middleware
 require('dotenv').config();
 const cors = require('cors');
@@ -44,6 +45,7 @@ function initMiddleware(app) {
 function declareRoutes(app) {
 	app.use('/api/auth', authRouter);
 	app.use('/api/user', userRouter);
+	app.use('/api/task', taskRouter);
 	app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 }
 
