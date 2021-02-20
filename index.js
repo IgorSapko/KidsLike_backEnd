@@ -1,59 +1,65 @@
-const mongoose = require("mongoose");
-const express = require("express");
-const cors = require("cors");
+//Core
+const express = require('express');
+const mongoose = require('mongoose');
+//Routes
+const authRouter = require('./routes/auth');
+//Middleware
+require('dotenv').config();
+const cors = require('cors');
+const morgan = require('morgan');
+const helmet = require('helmet');
+//Handle logs
+const accessLogStream = require('./utils/accessLogStream');
+//Docs
+const swaggerUi = require('swagger-ui-express');
+const swaggerDocument = require('./swagger.json');
 
-const contactRouter = require("./routes/contact.routes");
-const {  userRouter } = require("./routes/user.routes");
-const {  giftRouter } = require("./routes/gift.routes");
-const {  taskRouter } = require("./routes/tasks.routes");
-
-require("dotenv").config();
-
-const MONGO_PASS = process.env.MONGO_PASS;
+//Configs
 const PORT = process.env.PORT;
+const MONGO_PASS = process.env.MONGO_PASS;
 const MONGO_URL = `mongodb+srv://Admin:${MONGO_PASS}@cluster0.elolo.mongodb.net/kidsLike`;
 
 start();
 
 async function start() {
-  const app = initServer();
-  initMiddlewares(app);
-  declareRoutes(app);
-  await connectToDb();
-  listen(app);
+	const app = initServer();
+	initMiddleware(app);
+	declareRoutes(app);
+	await connectToDb();
+	listen(app);
 }
 
 function initServer() {
-  return express();
+	return express();
 }
 
-function initMiddlewares(app) {
-  app.use(cors());
-  app.use(express.json());
+function initMiddleware(app) {
+	app.use(helmet());
+	app.use(express.json());
+	app.use(morgan('combined', { stream: accessLogStream }));
+	app.use(cors({ origin: process.env.ALLOWED_ORIGIN }));
 }
 
 function declareRoutes(app) {
-  // app.use("/api/contacts", contactRouter);
-  // app.use("/auth", userRouterAuth);
-  // app.use("/users", userRouter);
+	app.use('/api/auth', authRouter);
+	app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 }
 
 async function connectToDb() {
-  try {
-    await mongoose.connect(MONGO_URL, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
-    console.log("Database connection successful");
-  } catch (error) {
-    console.log(error);
-    process.exit(1);
-  }
+	try {
+		await mongoose.connect(MONGO_URL, {
+			useNewUrlParser: true,
+			useUnifiedTopology: true,
+			useFindAndModify: false,
+		});
+
+		console.log('Database connection successful');
+	} catch (error) {
+		console.log(error);
+		process.exit(1);
+	}
 }
 
 function listen(app) {
-  app.listen(PORT, () => {
-    console.log("Server is listening on port: ", PORT);
-  });
+	app.listen(PORT, () => console.log('Server is listening on port: ', PORT));
 }
-
