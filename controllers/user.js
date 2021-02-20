@@ -18,8 +18,11 @@ async function getCurrentUser(req, res) {
 	if (!currentWeek) {
 		const newWeek = await createCurrentWeek();
 
-		user.currentWeek = newWeek._id;
-		await user.save();
+		await userModel.findByIdAndUpdate(
+			user._id,
+			{ $set: { currentWeek: newWeek._id } },
+			{ new: true },
+		);
 	}
 
 	const currentUser = await userModel.findOne({ _id: user._id }).populate({
