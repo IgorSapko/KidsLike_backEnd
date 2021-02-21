@@ -18,7 +18,7 @@ const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = require('./swagger.json');
 
 //Configs
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 8080;
 const MONGO_PASS = process.env.MONGO_PASS;
 const MONGO_URL = `mongodb+srv://Admin:${MONGO_PASS}@cluster0.elolo.mongodb.net/kidsLike`;
 
