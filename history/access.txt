@@ -1,0 +1,5 @@
+::1 - - [22/Feb/2021:13:44:24 +0000] "POST /api/auth/sign-in HTTP/1.1" 404 44 "-" "PostmanRuntime/7.26.10"
+::1 - - [22/Feb/2021:13:44:58 +0000] "POST /api/auth/sign-up HTTP/1.1" 400 38 "-" "PostmanRuntime/7.26.10"
+::1 - - [22/Feb/2021:13:45:14 +0000] "POST /api/auth/sign-up HTTP/1.1" 201 4583 "-" "PostmanRuntime/7.26.10"
+::1 - - [22/Feb/2021:13:49:57 +0000] "POST /api/auth/sign-up HTTP/1.1" 201 4585 "-" "PostmanRuntime/7.26.10"
+::1 - - [22/Feb/2021:13:55:20 +0000] "POST /api/auth/sign-up HTTP/1.1" 201 4588 "-" "PostmanRuntime/7.26.10"
