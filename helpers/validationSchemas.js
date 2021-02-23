@@ -51,31 +51,8 @@ const taskDateSchema = Joi.object({
 		.required(),
 });
 
-const taskActiveOneSchema = Joi.object({
-	days: Joi.array().min(tasksDayMin).max(tasksDayMax).items(Joi.boolean()).required(),
-});
-
 const taskActiveSchema = Joi.object({
-	tasks: Joi.array()
-		.items(
-			Joi.object({
-				taskId: Joi.string()
-					.custom((value, helpers) =>
-						!ObjectId.isValid(value) ? helpers.message({ message: 'Invalid taskId' }) : value,
-					)
-					.required(),
-				days: Joi.array()
-					.items(
-						Joi.object({
-							date: Joi.string().required(),
-							isActive: Joi.boolean().required(),
-							isCompleted: Joi.boolean().required(),
-						}),
-					)
-					.required(),
-			}),
-		)
-		.required(),
+	days: Joi.array().min(tasksDayMin).max(tasksDayMax).items(Joi.boolean()).required(),
 });
 
 /**
@@ -93,7 +70,6 @@ module.exports = {
 	createTaskSchema,
 	taskIdSchema,
 	taskDateSchema,
-	taskActiveOneSchema,
 	taskActiveSchema,
 	buyGiftSchema,
 };

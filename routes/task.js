@@ -10,20 +10,8 @@ const validate = require('../helpers/validate');
 const tryCatchHandler = require('../helpers/tryCatchHandler');
 const validationSchemas = require('../helpers/validationSchemas');
 
-const {
-	taskActiveOneSchema,
-	taskDateSchema,
-	createTaskSchema,
-	taskActiveSchema,
-	taskIdSchema,
-} = validationSchemas;
-
-const {
-	createCustomTask,
-	switchTaskActive,
-	switchTaskActiveOne,
-	switchTaskComplete,
-} = taskController;
+const { taskActiveSchema, taskDateSchema, createTaskSchema, taskIdSchema } = validationSchemas;
+const { createCustomTask, switchTaskActive, switchTaskComplete } = taskController;
 
 const taskRouter = Router();
 
@@ -36,21 +24,13 @@ taskRouter.post(
 	tryCatchHandler(createCustomTask),
 );
 
-// @ PATCH /api/task/active
+// @ PATCH /api/task/active/:taskId
 taskRouter.patch(
-	'/active',
-	tryCatchHandler(validateToken),
-	validate(taskActiveSchema),
-	tryCatchHandler(switchTaskActive),
-);
-
-// @ PATCH /api/task/active-one/:taskId
-taskRouter.patch(
-	'/active-one/:taskId',
+	'/active/:taskId',
 	tryCatchHandler(validateToken),
 	validate(taskIdSchema, 'params'),
-	validate(taskActiveOneSchema),
-	tryCatchHandler(switchTaskActiveOne),
+	validate(taskActiveSchema),
+	tryCatchHandler(switchTaskActive),
 );
 
 // @ PATCH /api/task/switch/:taskId
