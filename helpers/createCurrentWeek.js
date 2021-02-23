@@ -4,7 +4,7 @@ const dayjs = require('dayjs');
 const taskModel = require('../models/task');
 const weekModel = require('../models/week');
 //Utils
-const createDaysOfWeek = require('../utils/createDaysOfWeek');
+const createDaysOfWeek = require('./createDaysOfWeek');
 //Data
 const initialTasks = require('../data/initialTasks');
 
@@ -29,8 +29,8 @@ async function createCurrentWeek() {
 	const currentWeek = await weekModel.create({
 		startWeekDate: startWeek.format('DD-MM-YYYY'),
 		endWeekDate: startWeek.add(6, 'day').format('DD-MM-YYYY'),
-		rewardsGained: 0,
-		rewardsPlanned: 0,
+		pointsGained: 0,
+		pointsPlanned: 0,
 		tasks: tasksForWeek,
 	});
 

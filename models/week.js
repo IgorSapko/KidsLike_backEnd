@@ -8,8 +8,8 @@ const {
 const weekSchema = new Schema({
 	startWeekDate: { type: String },
 	endWeekDate: { type: String },
-	rewardsGained: { type: Number },
-	rewardsPlanned: { type: Number },
+	pointsGained: { type: Number },
+	pointsPlanned: { type: Number },
 	tasks: [{ type: ObjectId, ref: 'Task' }],
 });
 
