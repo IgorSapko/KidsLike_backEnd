@@ -2,20 +2,25 @@
 const userModel = require('../models/user');
 const weekModel = require('../models/week');
 const taskModel = require('../models/task');
+//Middleware
+const { uploadTaskAvatar } = require('../middleware/multer-md');
 //Utils
 const createDaysOfWeek = require('../helpers/createDaysOfWeek');
 
-//!Temp decision
-const defaultImage =
-	'https://creazilla-store.fra1.digitaloceanspaces.com/emojis/57178/robot-emoji-clipart-md.png';
+const DEFAULT_URL =
+	'https://storage.googleapis.com/kidslikev2_bucket/32c0d07a2fb62667895a261b612ad71c.png';
 
 async function createCustomTask(req, res) {
 	const {
 		body: { title, reward },
 		user,
+		file,
 	} = req;
 
-	const imageUrl = defaultImage;
+	let imageUrl;
+
+	!file ? (imageUrl = DEFAULT_URL) : (imageUrl = await uploadTaskAvatar(file));
+
 	const daysOfWeek = createDaysOfWeek();
 
 	const task = await taskModel.create({
