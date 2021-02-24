@@ -4,7 +4,7 @@ const { Router } = require('express');
 const taskController = require('../controllers/task');
 const { validateToken } = require('../controllers/auth');
 //Middleware
-const multer = require('../middleware/multer-md');
+const { multerMd } = require('../middleware/multer-md');
 //Helpers
 const validate = require('../helpers/validate');
 const tryCatchHandler = require('../helpers/tryCatchHandler');
@@ -19,7 +19,7 @@ const taskRouter = Router();
 taskRouter.post(
 	'/',
 	tryCatchHandler(validateToken),
-	multer.single('taskAvatar'),
+	multerMd.single('taskAvatar'),
 	validate(createTaskSchema),
 	tryCatchHandler(createCustomTask),
 );
