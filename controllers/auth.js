@@ -31,6 +31,8 @@ async function signUpUser(req, res) {
 		expiresIn: process.env.JWT_ACCESS_EXPIRE_TIME,
 	});
 
+	await userModel.findByIdAndUpdate(createdUser._id, { token }, { new: true });
+
 	const currentUser = await userModel.findOne({ email: req.body.email }).populate({
 		select: '-__v',
 		model: weekModel,
