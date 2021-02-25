@@ -1,7 +1,7 @@
 {
 	"openapi": "3.0.1",
 	"info": {
-		"version": "1.3.0",
+		"version": "1.3.1",
 		"title": "KidsLike API docs",
 		"description": "API documentation for GoIT FS-36 group project 'KidsLike'.  [Backend github repository](https://github.com/IgorSapko/KidsLike_backEnd)",
 		"license": {
@@ -11,7 +11,7 @@
 	},
 	"servers": [
 		{
-			"url": "https://kids-like-backend.herokuapp.com"
+			"url": "https://kids-like-backend-cloud.herokuapp.com"
 		}
 	],
 	"tags": [
@@ -336,14 +336,9 @@
 	"components": {
 		"schemas": {
 			"SignUpRequest": {
-				"required": ["username", "email", "password"],
+				"required": ["email", "password"],
 				"type": "object",
 				"properties": {
-					"username": {
-						"type": "string",
-						"description": "User's name",
-						"example": "Mango"
-					},
 					"email": {
 						"type": "string",
 						"description": "User's email",
@@ -387,11 +382,6 @@
 								"type": "string",
 								"description": "User's id",
 								"example": "60295cfb80a2de13a08aa281"
-							},
-							"username": {
-								"type": "string",
-								"description": "User's name",
-								"example": "Mango"
 							},
 							"email": {
 								"type": "string",
@@ -877,11 +867,6 @@
 								"type": "string",
 								"description": "User's id",
 								"example": "60295cfb80a2de13a08aa123"
-							},
-							"username": {
-								"type": "string",
-								"description": "User's name",
-								"example": "Mango"
 							},
 							"email": {
 								"type": "string",

@@ -10,15 +10,9 @@ const configs = require('../configs');
 /**
  * =============== Authentication schemas =====================================
  */
-const { usernameMin, usernameMax, userPassMin, userPassMax } = configs.users;
+const { userPassMin, userPassMax } = configs.users;
 
-const signUpSchema = Joi.object({
-	username: Joi.string().min(usernameMin).max(usernameMax).required(),
-	email: Joi.string().email().required(),
-	password: Joi.string().min(userPassMin).max(userPassMax).required(),
-});
-
-const signInSchema = Joi.object({
+const authSchema = Joi.object({
 	email: Joi.string().email().required(),
 	password: Joi.string().min(userPassMin).max(userPassMax).required(),
 });
@@ -65,8 +59,7 @@ const buyGiftSchema = Joi.object({
 });
 
 module.exports = {
-	signUpSchema,
-	signInSchema,
+	authSchema,
 	createTaskSchema,
 	taskIdSchema,
 	taskDateSchema,
