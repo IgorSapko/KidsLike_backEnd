@@ -40,13 +40,9 @@ async function signUpUser(req, res) {
 		populate: [{ path: 'tasks', model: taskModel, select: '-__v' }],
 	});
 
-	const { _id, username, email, balance, currentWeek } = currentUser;
+	const { _id, email, balance, currentWeek } = currentUser;
 
-	return res.status(201).json({
-		token,
-		user: { id: _id, username, email, balance },
-		week: currentWeek,
-	});
+	return res.status(201).json({ token, user: { id: _id, email, balance }, week: currentWeek });
 }
 
 /**
@@ -81,11 +77,7 @@ async function signInUser(req, res) {
 
 	const { _id, email, balance, currentWeek } = currentUser;
 
-	return res.status(200).json({
-		token,
-		user: { id: _id, email, balance },
-		week: currentWeek,
-	});
+	return res.status(200).json({ token, user: { id: _id, email, balance }, week: currentWeek });
 }
 
 /**

@@ -32,8 +32,8 @@ async function getCurrentUser(req, res) {
 		populate: [{ path: 'tasks', model: taskModel, select: '-__v' }],
 	});
 
-	const { email, balance, _id, username, currentWeek: week } = currentUser;
-	const response = { user: { id: _id, username, email, balance }, week };
+	const { email, balance, _id, currentWeek: week } = currentUser;
+	const response = { user: { id: _id, email, balance }, week };
 
 	return res.status(200).json(response);
 }
