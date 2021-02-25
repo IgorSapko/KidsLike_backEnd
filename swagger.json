@@ -1,7 +1,7 @@
 {
 	"openapi": "3.0.1",
 	"info": {
-		"version": "1.3.1",
+		"version": "1.4.0",
 		"title": "KidsLike API docs",
 		"description": "API documentation for GoIT FS-36 group project 'KidsLike'.  [Backend github repository](https://github.com/IgorSapko/KidsLike_backEnd)",
 		"license": {
@@ -26,6 +26,10 @@
 		{
 			"name": "Task",
 			"description": "Tasks endpoints"
+		},
+		{
+			"name": "Team",
+			"description": "Team endpoints"
 		}
 	],
 	"paths": {
@@ -327,6 +331,29 @@
 					},
 					"404": {
 						"description": "Invalid user",
+						"content": {}
+					}
+				}
+			}
+		},
+		"/api/team/contacts": {
+			"get": {
+				"tags": ["Team"],
+				"summary": "Get contacts of team members",
+				"parameters": [],
+				"responses": {
+					"200": {
+						"description": "Successful operation",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/TeamResponse"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request",
 						"content": {}
 					}
 				}
@@ -1011,6 +1038,78 @@
 						}
 					}
 				}
+			},
+			"TeamResponse": {
+				"type": "array",
+				"description": "Array of team members",
+				"items": {
+					"type": "object",
+					"description": "Team members",
+					"properties": {
+						"_id": {
+							"type": "string",
+							"description": "Member's id",
+							"example": "6036e314862ee64c148dfdee"
+						},
+						"fullName": {
+							"type": "string",
+							"description": "Member's full name",
+							"example": "Игорь Сапко"
+						},
+						"position": {
+							"type": "string",
+							"description": "Member's position at project",
+							"example": "Team Lead"
+						},
+						"avatar": {
+							"type": "string",
+							"description": "Member's avatar",
+							"example": "https://storage.googleapis.com/kidslikev2_bucket/e39429b71c5149ddcef5212687518574.jpg"
+						},
+						"socialLinks": {
+							"type": "array",
+							"description": "Member's social links",
+							"items": {
+								"type": "object",
+								"description": "Social links",
+								"properties": {
+									"label": {
+										"type": "string",
+										"description": "Link description",
+										"example": "GitHub"
+									},
+									"link": {
+										"type": "string",
+										"description": "Social link URL",
+										"example": "https://github.com"
+									}
+								}
+							}
+						}
+					}
+				},
+				"example": [
+					{
+						"_id": "6036e314862ee64c148dfdee",
+						"fullName": "Игорь Сапко",
+						"position": "Team Lead",
+						"avatar": "example.com/image1",
+						"socialLinks": [
+							{
+								"label": "GitHub",
+								"link": "https://github.com"
+							},
+							{
+								"label": "Facebook",
+								"link": "https://facebook.com"
+							},
+							{
+								"label": "LinkedIn",
+								"link": "https://linkedin.com"
+							}
+						]
+					}
+				]
 			}
 		},
 		"securitySchemes": {

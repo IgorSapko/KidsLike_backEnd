@@ -5,7 +5,7 @@ const mongoose = require('mongoose');
 const authRouter = require('./routes/auth');
 const userRouter = require('./routes/user');
 const taskRouter = require('./routes/task');
-const contactRouter = require('./routes/contact');
+const teamRouter = require('./routes/team');
 //Middleware
 require('dotenv').config();
 const cors = require('cors');
@@ -47,7 +47,7 @@ function declareRoutes(app) {
 	app.use('/api/auth', authRouter);
 	app.use('/api/user', userRouter);
 	app.use('/api/task', taskRouter);
-	app.use('/api/contacts', contactRouter);
+	app.use('/api/team', teamRouter);
 	app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 }
 
