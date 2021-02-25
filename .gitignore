@@ -1,6 +1,9 @@
 # G-CLOUD
 gcloud-config/
 
+# Contacts
+contacts.json
+
 # Logs
 logs
 
