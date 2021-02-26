@@ -54,9 +54,10 @@ function declareRoutes(app) {
 async function connectToDb() {
 	try {
 		await mongoose.connect(MONGO_URL, {
+			useCreateIndex: true,
 			useNewUrlParser: true,
-			useUnifiedTopology: true,
 			useFindAndModify: false,
+			useUnifiedTopology: true,
 		});
 
 		console.log('Database connection successful');
