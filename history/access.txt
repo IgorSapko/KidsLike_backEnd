@@ -1,2 +1,0 @@
-::1 - - [26/Feb/2021:16:00:53 +0000] "POST /api/auth/sign-up HTTP/1.1" 201 7088 "-" "PostmanRuntime/7.26.8"
-::1 - - [26/Feb/2021:16:09:52 +0000] "POST /api/auth/sign-up HTTP/1.1" 201 7088 "-" "PostmanRuntime/7.26.8"

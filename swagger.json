@@ -1,7 +1,7 @@
 {
 	"openapi": "3.0.1",
 	"info": {
-		"version": "1.4.0",
+		"version": "1.5.0",
 		"title": "KidsLike API docs",
 		"description": "API documentation for GoIT FS-36 group project 'KidsLike'.  [Backend github repository](https://github.com/IgorSapko/KidsLike_backEnd)",
 		"license": {
@@ -134,6 +134,23 @@
 					},
 					"404": {
 						"description": "Invalid user",
+						"content": {}
+					}
+				}
+			}
+		},
+		"/api/auth/google-auth": {
+			"get": {
+				"tags": ["Auth"],
+				"summary": "Google authentication.",
+				"description": "Works only for sign-in, after registered on front-end with real google account (not from postman)",
+				"responses": {
+					"200": {
+						"description": "Successful operation (redirect you to front-end with token in query).",
+						"content": {}
+					},
+					"403": {
+						"description": "You should register first. Google auth is only for sign-in",
 						"content": {}
 					}
 				}

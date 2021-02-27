@@ -159,6 +159,8 @@ async function redirectGoogle(req, res) {
 		expiresIn: process.env.JWT_ACCESS_EXPIRE_TIME,
 	});
 
+	await userModel.findByIdAndUpdate(existingUser._id, { $set: { token } }, { new: true });
+
 	return res.redirect(`${existingUser.origin}?token=${token}`);
 }
 
