@@ -9,6 +9,7 @@ const validationSchemas = require('../helpers/validationSchemas');
 
 const { authSchema } = validationSchemas;
 const { signUpUser, signInUser, signOutUser, validateToken } = authController;
+const { authGoogle, redirectGoogle } = authController;
 
 const authRouter = Router();
 
@@ -20,5 +21,11 @@ authRouter.post('/sign-in', validate(authSchema), tryCatchHandler(signInUser));
 
 // @ POST /api/auth/sign-out
 authRouter.post('/sign-out', tryCatchHandler(validateToken), tryCatchHandler(signOutUser));
+
+// @ GET /api/auth/google-auth
+authRouter.get('/google-auth', tryCatchHandler(authGoogle));
+
+// @ GET /api/auth/google-redirect
+authRouter.get('/google-redirect', tryCatchHandler(redirectGoogle));
 
 module.exports = authRouter;

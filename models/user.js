@@ -19,6 +19,7 @@ const userSchema = new Schema({
 	balance: { type: Number, required: false },
 	token: { type: String, required: false },
 	currentWeek: { type: ObjectId, ref: 'Week' },
+	origin: { type: String, required: false },
 });
 
 module.exports = model('User', userSchema);
