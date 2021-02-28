@@ -1,5 +1,5 @@
 //Packages
-const dayjs = require('dayjs');
+const { DateTime } = require('luxon');
 
 /**
  * This function returns days of the current week.
@@ -8,11 +8,11 @@ const dayjs = require('dayjs');
 function createDaysOfWeek() {
 	const daysOfWeek = [];
 
-	const startWeek = dayjs().startOf('week').add(1, 'day');
+	const startWeek = DateTime.local().startOf('week');
 
-	for (let i = 0; i < 7; i++) {
+	for (let i = 0; i < 7; i += 1) {
 		daysOfWeek.push({
-			date: startWeek.add(i, 'day').format('DD-MM-YYYY'),
+			date: startWeek.plus({ days: i }).toFormat('dd-MM-yyyy'),
 			isActive: false,
 			isCompleted: false,
 		});

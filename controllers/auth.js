@@ -68,7 +68,7 @@ async function signInUser(req, res) {
 	const user = await userModel.findOne({ email: req.body.email });
 
 	if (!user) {
-		return res.status(404).json({ message: 'User with such email not found' });
+		return res.status(403).json({ message: 'Email does not exist or password is wrong' });
 	}
 
 	const isUserPasswordCorrect = await bcrypt.compare(req.body.password, user.password);
@@ -105,6 +105,9 @@ async function signOutUser(req, res) {
 	return res.status(204).send();
 }
 
+/**
+ * This function create google config and redirect the user to the page with google auth.
+ */
 async function authGoogle(req, res) {
 	const gProfile = 'https://www.googleapis.com/auth/userinfo.profile';
 	const gEmail = 'https://www.googleapis.com/auth/userinfo.email';
@@ -121,6 +124,12 @@ async function authGoogle(req, res) {
 	return res.redirect(`https://accounts.google.com/o/oauth2/v2/auth?${queryParams}`);
 }
 
+/**
+ * After receiving the configurations, this function sends a request to Google
+ * to create an access token. Then it sends a request for authorization to Google. 
+ * If a previously registered user is in our database, then the user will be logged in. 
+ * If not, it will throw an error.
+ */
 async function redirectGoogle(req, res) {
 	const { protocol, originalUrl } = req;
 
