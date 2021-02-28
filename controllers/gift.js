@@ -7,7 +7,7 @@ const giftModel = require('../models/gift');
 async function getGifts(req, res) {
 	const gifts = await giftModel.find({});
 
-	return res.status(200).json(gifts);
+	return res.status(200).json({ gifts });
 }
 
 /**

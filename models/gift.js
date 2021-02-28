@@ -1,3 +1,4 @@
+// Core Mongoose
 const { model, Schema } = require('mongoose');
 
 const giftSchema = new Schema({
