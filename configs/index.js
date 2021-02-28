@@ -12,7 +12,7 @@ module.exports = {
 	},
 
 	gifts: {
-		gistCountMin: 1,
-		gistCountMax: 8,
+		giftCountMin: 1,
+		giftCountMax: 8,
 	},
 };

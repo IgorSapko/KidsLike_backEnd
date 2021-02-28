@@ -52,10 +52,10 @@ const taskActiveSchema = Joi.object({
 /**
  * =============== Gifts schemas ==============================================
  */
-const { gistCountMin, gistCountMax } = configs.gifts;
+const { giftCountMin, giftCountMax } = configs.gifts;
 
-const buyGiftSchema = Joi.object({
-	giftIds: Joi.array().min(gistCountMin).max(gistCountMax).unique().required(),
+const chooseGiftSchema = Joi.object({
+	giftIDs: Joi.array().min(giftCountMin).max(giftCountMax).unique().required(),
 });
 
 module.exports = {
@@ -64,5 +64,5 @@ module.exports = {
 	taskIdSchema,
 	taskDateSchema,
 	taskActiveSchema,
-	buyGiftSchema,
+	chooseGiftSchema,
 };
