@@ -122,25 +122,25 @@ async function switchTaskComplete(req, res) {
 
 	const week = await weekModel.findById(currentUser.currentWeek._id);
 
-	if (dayForUpdate.isCompleted) {
-		user.balance -= task.reward;
-		week.pointsGained -= task.reward;
-	} else {
+	if (!dayForUpdate.isCompleted) {
 		user.balance += task.reward;
 		week.pointsGained += task.reward;
+	} else {
+		user.balance -= task.reward;
+		week.pointsGained -= task.reward;
 	}
 
 	dayForUpdate.isCompleted = !dayForUpdate.isCompleted;
 
 	await task.save();
-	await week.save();
 	await user.save();
+	await week.save();
 
 	const { title, reward, imageUrl, _id, days } = task;
 
 	return res.status(200).json({
-		updatedBalance: user?.balance,
-		updatedWeekGainedPoints: week?.pointsGained,
+		updatedBalance: user.balance,
+		updatedWeekGainedPoints: week.pointsGained,
 		updatedTask: { id: _id, title, reward, imageUrl, days },
 	});
 }
