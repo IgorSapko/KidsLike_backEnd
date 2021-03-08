@@ -10,10 +10,7 @@ const teamRouter = require('./routes/team');
 //Middleware
 require('dotenv').config();
 const cors = require('cors');
-const morgan = require('morgan');
 const helmet = require('helmet');
-//Handle logs
-const accessLogStream = require('./utils/accessLogStream');
 //Docs
 const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = require('./swagger.json');
@@ -40,7 +37,6 @@ function initServer() {
 function initMiddleware(app) {
 	app.use(helmet());
 	app.use(express.json());
-	app.use(morgan('combined', { stream: accessLogStream }));
 	app.use(cors({ origin: process.env.ALLOWED_ORIGIN }));
 }
 

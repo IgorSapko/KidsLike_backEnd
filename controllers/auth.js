@@ -11,6 +11,7 @@ const taskModel = require('../models/task');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 //Helpers
+const checkCurrentWeek = require('../helpers/checkCurrentWeek');
 const createCurrentWeek = require('../helpers/createCurrentWeek');
 
 /**
@@ -83,6 +84,18 @@ async function signInUser(req, res) {
 
 	await userModel.findByIdAndUpdate(user._id, { token }, { new: true });
 
+	const currentWeek = await checkCurrentWeek(user.currentWeek);
+
+	if (!currentWeek) {
+		const newWeek = await createCurrentWeek();
+
+		await userModel.findByIdAndUpdate(
+			user._id,
+			{ $set: { currentWeek: newWeek._id } },
+			{ new: true },
+		);
+	}
+
 	const currentUser = await userModel.findOne({ email: req.body.email }).populate({
 		select: '-__v',
 		model: weekModel,
@@ -90,9 +103,9 @@ async function signInUser(req, res) {
 		populate: [{ path: 'tasks', model: taskModel, select: '-__v' }],
 	});
 
-	const { _id, email, balance, currentWeek } = currentUser;
+	const { _id, email, balance, currentWeek: week } = currentUser;
 
-	return res.status(200).json({ token, user: { id: _id, email, balance }, week: currentWeek });
+	return res.status(200).json({ token, user: { id: _id, email, balance }, week });
 }
 
 /**
@@ -126,8 +139,8 @@ async function authGoogle(req, res) {
 
 /**
  * After receiving the configurations, this function sends a request to Google
- * to create an access token. Then it sends a request for authorization to Google. 
- * If a previously registered user is in our database, then the user will be logged in. 
+ * to create an access token. Then it sends a request for authorization to Google.
+ * If a previously registered user is in our database, then the user will be logged in.
  * If not, it will throw an error.
  */
 async function redirectGoogle(req, res) {
