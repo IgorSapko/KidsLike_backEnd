@@ -17,7 +17,7 @@ const multerMd = multer({
 
 //Filter files mimetype
 function fileFilter(req, file, cb) {
-	const allowedTypes = ['image/png', 'image/jpg', 'image/jpeg', 'image/gif'];
+	const allowedTypes = ['image/png', 'image/jpg', 'image/jpeg', 'image/gif', 'image/svg+xml'];
 
 	allowedTypes.includes(file.mimetype) ? cb(null, true) : cb(null, false);
 }
