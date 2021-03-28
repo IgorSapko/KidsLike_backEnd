@@ -21,7 +21,6 @@ const createCurrentWeek = require('../helpers/createCurrentWeek');
 async function signUpUser(req, res) {
 	const {
 		body: { password, email },
-		headers: { origin },
 	} = req;
 
 	const existingUser = await userModel.findOne({ email });
@@ -38,7 +37,6 @@ async function signUpUser(req, res) {
 		password: encryptedPassword,
 		balance: 0,
 		currentWeek: week._id,
-		origin,
 	});
 
 	const token = jwt.sign({ userId: createdUser._id }, process.env.JWT_SECRET_KEY, {
@@ -169,21 +167,21 @@ async function redirectGoogle(req, res) {
 		headers: { Authorization: `Bearer ${gToken.data.access_token}` },
 	});
 
-	const existingUser = await userModel.findOne({ email: gUser.data.email });
+	let user = await userModel.findOne({ email: gUser.data.email });
 
-	if (!existingUser || !existingUser.origin) {
-		return res
-			.status(403)
-			.json({ message: 'You should register first. Google auth is only for sign-in' });
+	if (!user) {
+		const week = await createCurrentWeek();
+
+		user = await userModel.create({ email: gUser.data.email, balance: 0, currentWeek: week._id });
 	}
 
-	const token = jwt.sign({ userId: existingUser._id }, process.env.JWT_SECRET_KEY, {
+	const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET_KEY, {
 		expiresIn: process.env.JWT_ACCESS_EXPIRE_TIME,
 	});
 
-	await userModel.findByIdAndUpdate(existingUser._id, { $set: { token } }, { new: true });
+	await userModel.findByIdAndUpdate(user._id, { $set: { token } }, { new: true });
 
-	return res.redirect(`${existingUser.origin}?token=${token}`);
+	return res.redirect(`${process.env.ALLOWED_ORIGIN}?token=${token}`);
 }
 
 //Validate user token
@@ -223,3 +221,26 @@ module.exports = {
 	redirectGoogle,
 	validateToken,
 };
+
+// let token;
+
+// 	if (!existedUser) {
+// 		const week = await createCurrentWeek();
+// 		const newUser = await userModel.create({ email, balance: 0, currentWeek: week._id });
+
+// 		const token = jwt.sign({ userId: newUser._id }, process.env.JWT_SECRET_KEY, {
+// 			expiresIn: process.env.JWT_ACCESS_EXPIRE_TIME,
+// 		});
+
+// 		await userModel.findByIdAndUpdate(newUser._id, { $set: { token } }, { new: true });
+
+// 		return res.redirect(`${process.env.BASE_URL}?token=${token}`);
+// 	}
+
+// 	const token = jwt.sign({ userId: existedUser._id }, process.env.JWT_SECRET_KEY, {
+// 		expiresIn: process.env.JWT_ACCESS_EXPIRE_TIME,
+// 	});
+
+// 	await userModel.findByIdAndUpdate(existedUser._id, { $set: { token } }, { new: true });
+
+// 	return res.redirect(`${process.env.BASE_URL}?token=${token}`);
