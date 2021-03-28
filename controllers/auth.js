@@ -221,26 +221,3 @@ module.exports = {
 	redirectGoogle,
 	validateToken,
 };
-
-// let token;
-
-// 	if (!existedUser) {
-// 		const week = await createCurrentWeek();
-// 		const newUser = await userModel.create({ email, balance: 0, currentWeek: week._id });
-
-// 		const token = jwt.sign({ userId: newUser._id }, process.env.JWT_SECRET_KEY, {
-// 			expiresIn: process.env.JWT_ACCESS_EXPIRE_TIME,
-// 		});
-
-// 		await userModel.findByIdAndUpdate(newUser._id, { $set: { token } }, { new: true });
-
-// 		return res.redirect(`${process.env.BASE_URL}?token=${token}`);
-// 	}
-
-// 	const token = jwt.sign({ userId: existedUser._id }, process.env.JWT_SECRET_KEY, {
-// 		expiresIn: process.env.JWT_ACCESS_EXPIRE_TIME,
-// 	});
-
-// 	await userModel.findByIdAndUpdate(existedUser._id, { $set: { token } }, { new: true });
-
-// 	return res.redirect(`${process.env.BASE_URL}?token=${token}`);
