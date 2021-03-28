@@ -15,11 +15,10 @@ const userSchema = new Schema({
 			message: 'Email must contain "@"',
 		},
 	},
-	password: { type: String, required: true },
+	password: { type: String, required: false },
 	balance: { type: Number, required: false },
 	token: { type: String, required: false },
 	currentWeek: { type: ObjectId, ref: 'Week' },
-	origin: { type: String, required: false },
 });
 
 module.exports = model('User', userSchema);
